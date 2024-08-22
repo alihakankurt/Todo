@@ -40,3 +40,10 @@ namespace todo
     using f32 = std::float_t;
     using f64 = std::double_t;
 }
+
+static inline auto operator<<(std::ostream& stream, const std::chrono::time_point<std::chrono::system_clock>& now) -> std::ostream&
+{
+    auto time = std::chrono::system_clock::to_time_t(now);
+    stream << std::put_time(std::localtime(&time), "%d.%m.%Y %H:%M:%S");
+    return stream;
+}
