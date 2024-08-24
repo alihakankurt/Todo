@@ -11,7 +11,7 @@ namespace todo
       public:
         Task(std::string_view description) :
             _description(description),
-            _createdAt(time_point{}),
+            _createdAt(std::chrono::system_clock::now()),
             _completedAt() {}
 
         Task(std::string&& description, time_point createdAt, time_point completedAt) :
