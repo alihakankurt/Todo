@@ -14,19 +14,17 @@ namespace todo
 
         std::string description;
         std::chrono::system_clock::rep createdAtEpoch;
-        std::chrono::system_clock::rep completedAtEpoch;
 
         while (std::getline(file, description))
         {
-            if (!(file >> createdAtEpoch >> completedAtEpoch >> std::ws))
+            if (!(file >> createdAtEpoch >> std::ws))
             {
                 throw std::runtime_error("File format is incorrect or incomplete.");
             }
 
             std::chrono::system_clock::time_point createdAt{std::chrono::system_clock::duration{createdAtEpoch}};
-            std::chrono::system_clock::time_point completedAt{std::chrono::system_clock::duration{completedAtEpoch}};
 
-            tasks.emplace_back(std::move(description), createdAt, completedAt);
+            tasks.emplace_back(std::move(description), createdAt);
         }
 
         file.close();
@@ -45,7 +43,6 @@ namespace todo
         {
             file << task.Description() << '\n';
             file << task.CreatedAt().time_since_epoch().count() << '\n';
-            file << task.CompletedAt().time_since_epoch().count() << '\n';
         }
 
         file.close();

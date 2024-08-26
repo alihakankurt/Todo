@@ -98,6 +98,7 @@ target_include_directories(Includes INTERFACE
 set(SOURCE_FILES
     Source/Main.cpp
     Source/File.cpp
+    Source/CommandLine.cpp
 )
 
 add_executable(${PROJECT_NAME} ${SOURCE_FILES})
