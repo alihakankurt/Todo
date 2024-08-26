@@ -10,21 +10,16 @@ A nice and simple command line tool to manage tasks in our beautiful life.
 > todo add "Make a cup of tea"
 ```
 
-### Remove a task
+### Mark a task as done
 ```console
-> todo remove 1
+> todo done 1
 ```
 
 ### List tasks
 ```console
 > todo list
-    1. Make a cup of tea
-    2. Complete the project
-```
-
-### Mark a task as done
-```console
-> todo done 1
+    0. Make a cup of tea
+    1. Complete the project
 ```
 
 
