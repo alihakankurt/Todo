@@ -1,5 +1,11 @@
 #include <File.hpp>
 
+#if defined(__APPLE__)
+    #include <mach-o/dyld.h>
+#elif defined(_WIN32)
+    #include <Windows.h>
+#endif
+
 namespace todo
 {
     auto File::ReadAllTasks(std::filesystem::path filepath) -> std::vector<Task>
@@ -46,5 +52,28 @@ namespace todo
         }
 
         file.close();
+    }
+
+    auto File::GetRootPath() -> std::filesystem::path
+    {
+#if defined(__APPLE__)
+        char buffer[256];
+        u32 size = sizeof(buffer);
+        if (_NSGetExecutablePath(buffer, &size) != 0)
+        {
+            throw std::runtime_error("Buffer too small; need size " + std::to_string(size));
+        }
+
+        return std::filesystem::canonical(buffer).parent_path();
+#elif defined(__linux__)
+        return std::filesystem::canonical("/proc/self/exe").parent_path();
+#elif defined(_WIN32)
+        constexpr usize MAX_PATH = 256;
+        char buffer[MAX_PATH];
+        GetModuleFileNameA(nullptr, buffer, MAX_PATH);
+        return std::filesystem::canonical(buffer).parent_path();
+#else
+        throw std::runtime_error("Unsupported platform.");
+#endif
     }
 }

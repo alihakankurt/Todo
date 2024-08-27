@@ -5,10 +5,14 @@ namespace todo
 {
     auto CommandLine::Run(int argc, const char* argv[]) -> int
     {
-        constexpr std::string_view filepath = "tasks.txt";
+        constexpr std::string_view filename = "tasks.txt";
+        auto filepath = File::GetRootPath() / filename;
+
         std::vector<Task> tasks = File::ReadAllTasks(filepath);
+
         CommandLine commandLine{argc, argv, tasks};
         int status = commandLine.Run();
+
         File::WriteAllTasks(filepath, tasks);
         return status;
     }

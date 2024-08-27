@@ -10,5 +10,7 @@ namespace todo
       public:
         static auto ReadAllTasks(std::filesystem::path filepath) -> std::vector<Task>;
         static auto WriteAllTasks(std::filesystem::path filepath, const std::vector<Task>& tasks) -> void;
+
+        static auto GetRootPath() -> std::filesystem::path;
     };
 }
